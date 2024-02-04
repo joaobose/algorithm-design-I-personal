@@ -58,6 +58,6 @@ maxBPImpl(h, i, j):
   }
 
 maxBP(i, j):
-  # La longitud de la sub-cadena mas larga es el doble del numero de pares bien parentizados
-  return 2 * maxBPImpl(r, i, j).bp
+  # La longitud de la sub-cadena mas larga es el doble del numero de pares bien parentizados (i y j son 1-indexados)
+  return 2 * maxBPImpl(r, i - 1, j - 1).bp
 ```
