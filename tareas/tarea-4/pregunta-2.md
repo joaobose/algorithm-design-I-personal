@@ -1,13 +1,5 @@
 # Pregunta 2
 
-Tenemos `A` un arreglo de longitud `n`.
-
-Decimos que `B` es sub-arreglo de `A` si `B` es un arreglo que se puede obtener de `A` eliminando algunos (o ninguno) elementos manteniendo el orden relativo de los elementos restantes.
-
-Decimos que un arreglo `B` es bueno si no esta vacio y para todo `i`, `0 <= i <= n - 1`, `B[i] mod (i + 1) === 0`.
-
-Escribe una función que reciba un arreglo `A` y retorne la cantidad de sub-arreglos buenos de `A` utilizando programación dinámica.
-
 ## Solución
 
 Se propone un algoritmo que utiliza programación dinámica Bottom-Up para resolver el problema. Para ello, definimos la tabla `b[i][j]` como la cantidad de sub-arreglos buenos de tamaño `i` que utilizan los primeros `j` elementos de `A`.
