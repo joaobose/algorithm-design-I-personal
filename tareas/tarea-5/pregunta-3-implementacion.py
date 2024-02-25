@@ -9,6 +9,10 @@ INITIAL_BOARD = [["", "", ""], ["", "", ""], ["", "", ""]]
 
 
 def print_board(board):
+    """
+    Imprime el tablero en consola
+    """
+
     for i in range(3):
         row = ""
 
@@ -23,6 +27,12 @@ def print_board(board):
 
 
 def possible_moves(board, player, last_move=None):
+    """
+    Retorna una lista con los posibles movimientos que puede hacer el jugador
+    tomando en cuenta el estado actual del tablero y el ultimo movimiento
+    realizado.
+    """
+
     moves = []
 
     for i in range(3):
@@ -46,6 +56,12 @@ def possible_moves(board, player, last_move=None):
 
 
 def make_move(board, move, player, last_move=None):
+    """
+    Retorna un nuevo tablero con el movimiento realizado por el jugador.
+
+    Si el movimiento es invalido, se lanza una excepcion.
+    """
+
     i, j = move
     new_board = deepcopy(board)
 
@@ -71,6 +87,15 @@ def make_move(board, move, player, last_move=None):
 
 
 def is_terminal(board):
+    """
+    Retorna True si el tablero es un estado terminal, es decir, ya existe un
+    ganador.
+
+    Notese que no es posible que exista un empate en este juego pues
+    el estado donde se tiene un tablero lleno con solo "+" implica que
+    ya existe un ganador.
+    """
+
     # Ganar por filas
     for i in range(3):
         if board[i][0] == board[i][1] == board[i][2] == BOTH:
@@ -92,6 +117,13 @@ def is_terminal(board):
 
 
 def eval(board, current_player):
+    """
+    Retorna el valor de la heuristica para el tablero actual.
+
+    Par este juego, el valor de la heuristica es 1 si el jugador que hizo
+    el ultimo movimiento gano, -1 si perdio y 0 si el juego continua.
+    """
+
     # Si se tiene una linea de 3 "+" gano el jugador que hizo
     # el ultimo movimiento
     prev_player = MAX if current_player == MIN else MIN
@@ -103,6 +135,10 @@ def eval(board, current_player):
 
 
 def max_player(board, alpha, beta, last_move=None):
+    """
+    Algoritmo minimax para el jugador MAX.
+    """
+
     if is_terminal(board):
         return eval(board, MAX), None, []
 
@@ -129,6 +165,10 @@ def max_player(board, alpha, beta, last_move=None):
 
 
 def min_player(board, alpha, beta, last_move=None):
+    """
+    Algoritmo minimax para el jugador MIN.
+    """
+
     if is_terminal(board):
         return eval(board, MIN), None, []
 
@@ -155,17 +195,15 @@ def min_player(board, alpha, beta, last_move=None):
 
 
 def minmax(board):
+    """
+    Algoritmo minimax para un tablero dado. Utilizando poda alfa-beta.
+    """
+
     alpha = float("-inf")
     beta = float("inf")
 
     return max_player(board, alpha, beta, None)
 
-
-TEST_BOARD = [
-    ["", "+", ""],
-    ["|", "-", ""],
-    ["-", "", "|"]
-]
 
 score, best_move, boards = minmax(INITIAL_BOARD)
 
