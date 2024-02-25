@@ -91,106 +91,20 @@ def is_terminal(board):
     return False
 
 
-def eval(board, player, last_move=None):
-    """
-    Evalua un tablero para un jugador dado utilizando la heuristica de
-    contar el numero de potenciales lineas ganadoras que tiene el jugador
-    en el tablero.
+def eval(board, current_player):
+    # Si se tiene una linea de 3 "+" gano el jugador que hizo
+    # el ultimo movimiento
+    prev_player = MAX if current_player == MIN else MIN
 
-    Para cada linea sumando:
-      Caso vacio:
-      - 0 si la linea esta vacia
-
-      Caso la linea tiene una posicion jugada:
-      - 0 si la linea tiene una posicion jugada y dos vacias
-      - 0 si la linea tiene dos posiciones jugada y una vacia
-      - 1 si la linea tiene tres posiciones jugadas
-
-      Caso la linea tiene posiciones BOTH y vacias:
-      - 1 si la linea tiene una posicion BOTH y dos vacias
-      - 2 si la linea tiene dos posiciones BOTH y una vacia
-
-      Caso la linea tiene posiciones jugadas y BOTH:
-      - -2 si la linea tiene una posicion BOTH y dos posiciones jugadas del jugador
-      - 2 si la linea tiene una posicion BOTH y dos posiciones jugadas del contrario
-      - 12 si la linea tiene dos posiciones BOTH y una posicion jugada del contrario
-      - -12 si la linea tiene dos posiciones BOTH y una posicion jugada del jugador
-    """
-    score = 0
-
-    line_pos = [
-        # Filas
-        ((i, 0), (i, 1), (i, 2)) for i in range(3)
-    ] + [
-        # Columnas
-        ((0, j), (1, j), (2, j)) for j in range(3)
-    ] + [
-        # Diagonales
-        ((0, 0), (1, 1), (2, 2)),
-        ((0, 2), (1, 1), (2, 0))
-    ]
-
-    for line in line_pos:
-        same = 0
-        other = 0
-        both = 0
-        empty = 0
-
-        for pos in line:
-            i, j = pos
-            if board[i][j] == player:
-                same += 1
-            elif board[i][j] == "":
-                empty += 1
-            elif board[i][j] == BOTH:
-                both += 1
-            else:
-                other += 1
-
-        # Caso vacio
-        if empty == 3:
-            score += 0
-
-        # Caso la linea tiene una posicion jugada
-        if empty == 2 and both == 0:
-            score += 0
-
-        if empty == 1 and both == 0:
-            score += 0
-
-        if empty == 0 and both == 0:
-            score += 1
-
-        # Caso la linea tiene posiciones BOTH y vacias
-        if empty == 2 and both == 1:
-            score += 1
-
-        if empty == 1 and both == 2:
-            score += 2
-
-        # Caso la linea tiene posiciones jugadas y BOTH
-        if both == 1 and same == 2:
-            score += -2
-
-        if both == 1 and other == 2:
-            score += 2
-
-        if both == 2 and other == 1:
-            score += 12
-
-        if both == 2 and same == 1:
-            score += -12
-
-    return score if player == MAX else -score
-
-
-def max_player(board, alpha, beta, last_move=None, depth=10):
-    # Si el tablero es terminal, el jugador MIN gana
     if is_terminal(board):
-        return -1000, None, []
+        return 1 if prev_player == MAX else -1
 
-    if depth == 0:
-        return eval(board, MAX, last_move), None, []
+    return 0
+
+
+def max_player(board, alpha, beta, last_move=None):
+    if is_terminal(board):
+        return eval(board, MAX), None, []
 
     moves = possible_moves(board, MAX, last_move)
     best_move = None
@@ -200,7 +114,7 @@ def max_player(board, alpha, beta, last_move=None, depth=10):
     for move in moves:
         new_board = make_move(board, move, MAX, last_move)
         score, min_move, min_boards = min_player(
-            new_board, alpha, beta, move, depth - 1)
+            new_board, alpha, beta, move)
 
         if score > best_score:
             best_score = score
@@ -214,13 +128,9 @@ def max_player(board, alpha, beta, last_move=None, depth=10):
     return best_score, best_move, [make_move(board, best_move, MAX, last_move)] + best_boards
 
 
-def min_player(board, alpha, beta, last_move=None, depth=10):
-    # Si el tablero es terminal, el jugador MAX gana
+def min_player(board, alpha, beta, last_move=None):
     if is_terminal(board):
-        return 1000, None, []
-
-    if depth == 0:
-        return eval(board, MIN, last_move), None, []
+        return eval(board, MIN), None, []
 
     moves = possible_moves(board, MIN, last_move)
     best_move = None
@@ -230,7 +140,7 @@ def min_player(board, alpha, beta, last_move=None, depth=10):
     for move in moves:
         new_board = make_move(board, move, MIN, last_move)
         score, max_move, max_boards = max_player(
-            new_board, alpha, beta, move, depth - 1)
+            new_board, alpha, beta, move)
 
         if score < best_score:
             best_score = score
@@ -244,11 +154,11 @@ def min_player(board, alpha, beta, last_move=None, depth=10):
     return best_score, best_move, [make_move(board, best_move, MIN, last_move)] + best_boards
 
 
-def minmax(board, depth=7):
+def minmax(board):
     alpha = float("-inf")
     beta = float("inf")
 
-    return max_player(board, alpha, beta, None, depth)
+    return max_player(board, alpha, beta, None)
 
 
 TEST_BOARD = [
@@ -257,7 +167,7 @@ TEST_BOARD = [
     ["-", "", "|"]
 ]
 
-score, best_move, boards = minmax(INITIAL_BOARD, 150)
+score, best_move, boards = minmax(INITIAL_BOARD)
 
 print(f"Score: {score}")
 print("Chain: ")
