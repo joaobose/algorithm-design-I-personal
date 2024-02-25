@@ -184,7 +184,7 @@ def eval(board, player, last_move=None):
     return score if player == MAX else -score
 
 
-def max_player(board, last_move=None, depth=10):
+def max_player(board, alpha, beta, last_move=None, depth=10):
     # Si el tablero es terminal, el jugador MIN gana
     if is_terminal(board):
         return -1000, None, []
@@ -199,17 +199,22 @@ def max_player(board, last_move=None, depth=10):
 
     for move in moves:
         new_board = make_move(board, move, MAX, last_move)
-        score, min_move, min_boards = min_player(new_board, move, depth - 1)
+        score, min_move, min_boards = min_player(
+            new_board, alpha, beta, move, depth - 1)
 
         if score > best_score:
             best_score = score
             best_move = move
             best_boards = min_boards
 
+        alpha = max(alpha, best_score)
+        if beta <= alpha:
+            break
+
     return best_score, best_move, [make_move(board, best_move, MAX, last_move)] + best_boards
 
 
-def min_player(board, last_move=None, depth=10):
+def min_player(board, alpha, beta, last_move=None, depth=10):
     # Si el tablero es terminal, el jugador MAX gana
     if is_terminal(board):
         return 1000, None, []
@@ -224,18 +229,26 @@ def min_player(board, last_move=None, depth=10):
 
     for move in moves:
         new_board = make_move(board, move, MIN, last_move)
-        score, max_move, max_boards = max_player(new_board, move, depth - 1)
+        score, max_move, max_boards = max_player(
+            new_board, alpha, beta, move, depth - 1)
 
         if score < best_score:
             best_score = score
             best_move = move
             best_boards = max_boards
 
+        beta = min(beta, best_score)
+        if beta <= alpha:
+            break
+
     return best_score, best_move, [make_move(board, best_move, MIN, last_move)] + best_boards
 
 
 def minmax(board, depth=7):
-    return max_player(board, None, depth)
+    alpha = float("-inf")
+    beta = float("inf")
+
+    return max_player(board, alpha, beta, None, depth)
 
 
 TEST_BOARD = [
@@ -244,7 +257,7 @@ TEST_BOARD = [
     ["-", "", "|"]
 ]
 
-score, best_move, boards = minmax(TEST_BOARD, 12)
+score, best_move, boards = minmax(INITIAL_BOARD, 150)
 
 print(f"Score: {score}")
 print("Chain: ")
