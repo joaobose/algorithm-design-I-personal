@@ -1,10 +1,10 @@
 # Razonamiento
 
-Notese que este problema es similar al de responder consultas de tipo `maxCon(a,b)` visto en clase, que se resolvio utilizando Heavy-Light decomposition (HLD). Partiendo de eso, vamos a realizar el siguiente precondicionamiento:
+Notese que este problema es similar al de responder consultas de tipo `maxCon(a,b)` visto en clase, que se resolvió utilizando Heavy-Light decomposition (HLD). Partiendo de eso, vamos a realizar el siguiente precondicionamiento:
 
 - Recorrer el arbol (utilizando DFS) para asignar a cada nodo `n` la cantidad de nodos que hay en el subarbol que tiene a `n` como raiz, esta cantidad se guardará en `n.size`. Este precondicionamiento se puede hacer en `O(N)` con memoria adicional `O(N)`.
 - Obtener la descompocision heavy-light del arbol utilizando la cantidad `size` de cada nodo. Esto se puede hacer en `O(N)` con memoria adicional `O(N)`.
-- Crear un segment tree para cada camino de la descomposicion heavy-light, que almacene dos resultados, uno para la operacion `forall` y otro para la operacion `exists`. Obterner el segment tree para una cadena es `O(c)`, donde `c` es la longitud de la cada cadena, por lo tanto, el costo total de crear los segment tree es dos veces la suma de las longitudes de todas las cadenas, es decir, `O(N)` en el peor caso. Todo esto con memoria adicional `O(N)`.
+- Crear un segment tree para cada camino de la descomposicion heavy-light, que almacene dos resultados, uno para la operacion `forall` y otro para la operacion `exists`. Obtener el segment tree para una cadena es `O(c)`, donde `c` es la longitud de la cada cadena, por lo tanto, el costo total de crear los segment tree es la suma de las longitudes de todas las cadenas, es decir, `O(N)` en el peor caso. Todo esto con memoria adicional `O(N)`.
 
 Con estos precondicionamientos, el costo de responder una consulta es `O(log(N))`, permitiendo que responder `Q` consultas tenga un costo de `O(N + Q * log(N))` con memoria adicional `O(N)`.
 
@@ -24,7 +24,7 @@ Para adaptar la solucion a este problema, se realizaron las siguientes modificac
 
 - Adicionalmente, se recontextualizo el codigo para que se ajuste a la implementacion de la solucion para este problema. Documentando el codigo y agregando comentarios para que se entienda mejor el funcionamiento de la implementacion.
 
-En el archivo de la implementacion se muestra un ejemplo de como utilizar la implementacion para resolver el problema, y se demuestra que da el resultado correcto paraun ejemplo de prueba. En concreto, se muestra como se puede utilizar la implementacion para resolver el problema de la siguiente forma:
+En el archivo de la implementacion se muestra un ejemplo de como utilizar la implementacion para resolver el problema, y se demuestra que da el resultado correcto para un ejemplo de prueba. En concreto, se muestra como se puede utilizar la implementacion para resolver el problema de la siguiente forma:
 
 ```python
 # CONSTRUCCIÓN DEL ÁRBOL

@@ -92,8 +92,6 @@ def dfs(curr, prev, dep, n):
             dfs(j, curr, dep + 1, n)
             node[curr].size += node[j].size
 
-# Recursive function that decomposes the Tree into chains
-
 
 def hld(curr_node, id, edge_counted, curr_chain, n, chain_heads):
     """
@@ -232,8 +230,6 @@ def all_any_range(qs, qe, n):
         return 0, 1  # Elementos neutros de OR y AND
 
     return all_any_range_util(0, n, qs, qe, 1)
-
-# Function to move from u to v keeping track of the any and all values
 
 
 def crawl_tree(u, v, n, chain_heads, query='any'):
