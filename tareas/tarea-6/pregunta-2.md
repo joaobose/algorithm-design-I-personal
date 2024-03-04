@@ -12,7 +12,7 @@ Con estos precondicionamientos, el costo de responder una consulta es `O(log(N))
 
 La implementación de la solución se encuentra en el archivo [pregunta-2-implementacion.py](pregunta-2-implementacion.py).
 
-Esta implementación se construyó en base a la implementacion de la solucion para `maxCon` por _geeksforgeeks_ que se encuentra en [este enlace](https://www.geeksforgeeks.org/heavy-light-decomposition-set-2implementation/).
+Esta implementación se construyó en base a la implementacion de la solucion para `maxCon` por _geeksforgeeks_ que se encuentra en [este enlace](https://www.geeksforgeeks.org/implementation-of-heavy-light-decomposition/).
 
 Para adaptar la solucion a este problema, se realizaron las siguientes modificaciones:
 
