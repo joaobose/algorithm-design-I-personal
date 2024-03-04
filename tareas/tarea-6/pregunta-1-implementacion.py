@@ -44,7 +44,8 @@ def multiswap_range(N, a, b):
 def multiswap_treap(treap, a, b, debug=False):
     N = treap.root.size
 
-    # Obtener los rangos de los sub arreglos (complexity O(1))
+    # Obtener los rangos de los sub arreglos
+    # (tiempo O(1))
     lower_sa = a
     upper_sa = min(a + N - b, b - 1)
 

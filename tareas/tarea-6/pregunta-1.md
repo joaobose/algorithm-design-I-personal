@@ -33,7 +33,7 @@ multiswap(A, a, b) = head + Sb + center + Sa + tail
 
 Para hacer esto, podemos contruir un treap implicito para la secuencia `A`. Luego, podemos usar las operaciones `split` y `merge` para dividir `A` en `head`, `Sa`, `center`, `Sb` y `tail`, y luego intercambiar `Sa` con `Sb` para obtener el resultado de `multiswap`. Como `split` y `merge` tienen complejidad `O(log N)`, la complejidad de `multiswap` es `O(log N)`.
 
-Lo cual nos permite realizar las N acciones en `O(N log N)`.
+Lo cual nos permite realizar las `N` acciones en `O(N log N)`.
 
 Como el treap utiliza memoria `O(N)`, la memoria adicional utilizada es `O(N)`.
 
@@ -47,7 +47,8 @@ Luego, se implemento la funcion `multiswap_treap` que utiliza el treap implicito
 def multiswap_treap(treap, a, b):
     N = treap.root.size
 
-    # Obtener los rangos de los sub arreglos (complexity O(1))
+    # Obtener los rangos de los sub arreglos
+    # (tiempo O(1))
     lower_sa = a
     upper_sa = min(a + N - b, b - 1)
 
