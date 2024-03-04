@@ -127,4 +127,4 @@ for a, b in operations:
 print('List multiswap: ', A)
 ```
 
-Los resultados de ambas implementaciones deben son iguales.
+Los resultados de ambas implementaciones son iguales, lo cual indica que la implementacion de `multiswap_treap` es correcta.
