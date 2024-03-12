@@ -58,7 +58,11 @@ def onion_convex_hull(points):
 
     # Numero maximo de capas, n
     for _ in range(0, len(points)):
-        if len(pset) < 2:
+        if len(pset) == 0:
+            break
+
+        if len(pset) == 1:
+            count += 1
             break
 
         pset -= convex_hull(pset)
@@ -83,6 +87,8 @@ POINTS = [
     (2, 4),
     (4, 4),
     (4, 2),
+    # Cuarta capa: punto en (3, 3)
+    (3, 3)
 ]
 
-print(onion_convex_hull(POINTS))  # 3
+print(onion_convex_hull(POINTS))  # 4

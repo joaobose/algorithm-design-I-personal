@@ -3,10 +3,11 @@ Para resolver este problema, se puede aplicar convex hull sucesivamente, elimina
 Si `pset` es la estructura conjunto que representa `P`, entonces el algoritmo es el siguiente:
 
 1. Inicializar `count` en cero.
-2. Mientras `pset` tenga más de dos elementos:
-   1. Calcular el convex hull de `pset` y almacenarlo en `hull`.
-   2. Aumentar `count` en uno.
-   3. Eliminar de `pset` los puntos que están en `hull`.
+2. Mientras `pset` no sea vacio:
+   1. Si `pset` tiene un solo punto, aumentar `count` en uno y terminar.
+   2. Calcular el convex hull de `pset` y almacenarlo en `hull`.
+   3. Aumentar `count` en uno.
+   4. Eliminar de `pset` los puntos que están en `hull`.
 
 El resultado es el valor de `count`.
 
@@ -29,7 +30,11 @@ def onion_convex_hull(points):
 
     # Numero maximo de capas, n
     for _ in range(0, len(points)):
-        if len(pset) < 2:
+        if len(pset) == 0:
+            break
+
+        if len(pset) == 1:
+            count += 1
             break
 
         pset -= convex_hull(pset)
