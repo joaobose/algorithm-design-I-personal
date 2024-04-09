@@ -38,7 +38,7 @@ Sea $A$ el conjunto de lados seleccionados por el paso 3.1 del algoritmo 1. Como
 
 Ademas, como **no** hay dos lados en $A$ que sean cubiertos por el mismo vertice en $R^*$ (debido al paso 3.3 y 3.1), entonces $|A| \leq |R^*|$ **[3]**.
 
-Combinando **[2]** y **[4]** tenemos:
+Combinando **[2]** y **[3]** tenemos:
 
 $$
 |A| \leq |R^*| \\
